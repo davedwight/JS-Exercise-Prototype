@@ -150,10 +150,19 @@ console.log(Ford);
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. When in the global scope, so not inside an object that is inside of the window object, the value of "this" will be the window Object.
+    2. Whenever a function is called by using a preceding dot ( eg myObj.function() ), the value of "this" will be the object to the left of the dot.
+    3. When using a constructor function, "this" refers to the new instance of the object that is created by the constructor function. eg if you had a new constructor function: function DogMaker(prop){
+      this.name = prop.name,
+      this.breed = prop.breed
+    }
+    and you initialize a new object by: 
+    const buddy = new DogMaker({
+      name = 'Buddy',
+      breed = 'Basset Hound'
+    });
+    then "this" (in lines 156 and 157) will have the value of the new object that is created using the constructor function (in this example: buddy). So the constructor function would assign the value of this.name (which in this initialization can be thought of as equivalent to buddy.name) to the value of the name key of the object getting passed into the constructor function via the placeholder value "prop".
+    4. You can use explicit binding to explicitly define the value of "this". For example, by using .call(), .apply(), or .bind(), you can override implicit binding. These methods immediately call the function and the value of "this" will be the arguments passed into each method.
   */
   
   
