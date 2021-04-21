@@ -50,6 +50,7 @@ function Airplane(name) {
       this.stomach.push(edible);
     }
   }
+
   Person.prototype.poop = function(){
     this.stomach = [];
   }
@@ -98,13 +99,30 @@ function Airplane(name) {
   }
 
   Car.prototype.fill = function(gallons){
-    return gallons + this.tank;
+    this.tank += gallons;
+    return this.tank;
   }
 
   Car.prototype.drive = function(distance){
-    this.odometer += distance;
-    this.tank - (1/(this.milesPerGallon / distance)); 
+    const drivableMiles = this.tank * this.milesPerGallon;
+     
+    if(distance > drivableMiles) {
+      this.odometer += drivableMiles;
+      this.tank = 0;
+      return `I ran out of fuel at ${this.odometer} miles!`
+    } else {
+      this.odometer += distance;
+      this.tank -= (distance / this.milesPerGallon);
+    }
   }
+
+const Ford = new Car('Ford', 25);
+
+console.log(Ford);
+console.log('task2b', Ford.drive(10000));
+console.log('task2a', Ford.fill(20));
+console.log('task2c', Ford.fill(20));
+console.log(Ford);
   
   
   /*
@@ -114,11 +132,21 @@ function Airplane(name) {
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(name, age, favoriteToy) {
+   Person.call(this, name, age);
+   this.favoriteToy = favoriteToy;
+  }
+
+  Baby.prototype = Object.create(Person.prototype);
+
+  Baby.prototype.play = function(){
+    return `Playing with ${this.favoriteToy}`;
   }
  
-  
+  const lilDave = new Baby('lil Dave', 1, 'ball');
+  console.log('task3', lilDave.play());
+
+
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
